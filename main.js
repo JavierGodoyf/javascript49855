@@ -17,7 +17,7 @@ function Nfibonacci(num){
     if (num <=0){
         alert("el valor ingresado no es valido")
     }else if (num === 1 || num === 2)
-        alert("la posicion " + num + "es: 1")
+        alert("la posicion " + num + " es: 1")
     else{
         let a = 1
         let b = 1
@@ -26,7 +26,7 @@ function Nfibonacci(num){
                 a = b
                 b = aux
         }
-        alert("la posicion " + num + "es: " + b)
+        alert("la posicion " + num + " es: " + b)
     }
 }
 
