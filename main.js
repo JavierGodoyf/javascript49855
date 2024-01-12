@@ -1,30 +1,30 @@
 //declaracion de funciones
 function suma(num1, num2) {
-    return num1+num2
+    return num1 + num2
 }
 
 function resta(num1, num2) {
-    return num1-num2
+    return num1 - num2
 }
 
 function factorial(num1) {
-    let result=1
-    for (let i=1; i<=num1;i++)
-        result=result*i
+    let result = 1
+    for (let i = 1; i <= num1; i++)
+        result = result * i
     return result
 }
-function Nfibonacci(num){
-    if (num <=0){
+function Nfibonacci(num) {
+    if (num <= 0) {
         alert("el valor ingresado no es valido")
-    }else if (num === 1 || num === 2)
+    } else if (num === 1 || num === 2)
         alert("la posicion " + num + " es: 1")
-    else{
+    else {
         let a = 1
         let b = 1
-        for(let i=3; i <= num; i++){
-                let aux = a+b
-                a = b
-                b = aux
+        for (let i = 3; i <= num; i++) {
+            let aux = a + b
+            a = b
+            b = aux
         }
         alert("la posicion " + num + " es: " + b)
     }
@@ -43,24 +43,24 @@ do { //utilizando bucle do-while
         case 1:
             num1 = parseFloat(prompt("ingrese el primer numero"))
             num2 = parseFloat(prompt("ingrese el segundo numero"))
-            result=suma(num1, num2) //usando funciones declaradas
+            result = suma(num1, num2) //usando funciones declaradas
             alert("la suma de ambos numeros es: " + result)
             break
 
         case 2:
             num1 = parseFloat(prompt("ingrese el primer numero"))
             num2 = parseFloat(prompt("ingrese el segundo numero"))
-            result = resta(num1,num2) //usando funciones declaradas
+            result = resta(num1, num2) //usando funciones declaradas
             alert("la resta de ambos numeros es: " + result)
             break
 
         case 3:
-            num1 = parseFloat(prompt("ingrese el dividendo"));
-            num2 = parseFloat(prompt("ingrese el divisor"));
-            if(num2!==0){
-            result = ((dividendo, divisor) => dividendo / divisor)(num1, num2);  //  utilizando funcion flecha
-            alert("la division de ambos numeros es: " + result);
-            }else{
+            num1 = parseFloat(prompt("ingrese el dividendo"))
+            num2 = parseFloat(prompt("ingrese el divisor"))
+            if (num2 !== 0) {
+                result = ((dividendo, divisor) => dividendo / divisor)(num1, num2)  //  utilizando funcion flecha
+                alert("la division de ambos numeros es: " + result)
+            } else {
                 alert("No se puede dividir por 0")
             }
             break;
@@ -68,21 +68,21 @@ do { //utilizando bucle do-while
         case 4:
             num1 = parseFloat(prompt("ingrese el primer numero"))
             num2 = parseFloat(prompt("ingrese el segundo numero"))
-            result =(function (multi1, multi2) { // utilizando funcion anonima
-                return multi1*multi2
-            })(num1,num2)
+            result = (function (multi1, multi2) { // utilizando funcion anonima
+                return multi1 * multi2
+            })(num1, num2)
             alert("la multiplicacion de ambos numeros es: " + result)
             break
 
         case 5:
             num1 = parseFloat(prompt("ingrese numero para calcular factorial"))
-            result =factorial(num1) //usando funcion declarada con bucle for
+            result = factorial(num1) //usando funcion declarada con bucle for
             alert("el resultado del factorial de " + num1 + " es: " + result)
             break
-        
+
         case 6:
             num1 = parseFloat(prompt("ingrese el numero fibonacci a consultar"))
-                Nfibonacci(num1);
+            Nfibonacci(num1);
             break
 
         case 7:
