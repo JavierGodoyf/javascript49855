@@ -7,5 +7,3 @@ simulador interactivo
 * dividir 
 * multiplicar
 * factorial
-
-se utilizo do while 
