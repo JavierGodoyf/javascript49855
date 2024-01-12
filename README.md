@@ -7,5 +7,6 @@ simulador interactivo
 * dividir 
 * multiplicar
 * factorial
+* numero de fibonacci
 
 se utilizo do while 
