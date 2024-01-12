@@ -29,7 +29,6 @@ function Nfibonacci(num){
         alert("la posicion " + num + " es: " + b)
     }
 }
-
 //inicio programa
 //variables
 let num1
