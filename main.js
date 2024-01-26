@@ -1,23 +1,90 @@
-function tarea(descripcion, fecha, hora) {
+const listaDeTareas = []
+function nuevaTarea(descripcion) {
+    nuevaTarea.contador = (nuevaTarea.contador || 0) + 1;
+
+    this.id = nuevaTarea.contador;
     this.descripcion = descripcion;
-    this.fecha = fecha;
-    this.hora = hora;
     this.estado = false;
     this.completar = function () {
-        this.estado = true;
-        alert("La tarea " + this.descripcion + " ha sido completada");
+        this.estado = !this.estado;
+        if (this.estado == true)
+            alert("La tarea " + this.descripcion + " ha cambiado de estado a completada");
+        else
+            alert("la tarea " + this.descripcion + " ha cambiado de estado a pendiente")
     }
 }
-const tareas = []
+function agregarTarea() {
+    let descripcion = prompt("Ingresa la descripcion de la tarea");
+    let tarea = new nuevaTarea(descripcion);
+    listaDeTareas.push(tarea);
+}
+
+function filtrarTareas() {
+    if (listaDeTareas.length > 0) {
+        let filtro = parseInt(prompt("Selecciona el filtro:\n1) Tareas completadas\n2) Tareas pendientes"));
+
+        switch (filtro) {
+            case 1:
+                let tareasCompletadas = listaDeTareas.filter(tarea => tarea.estado);
+                if (tareasCompletadas.length > 0) {
+                    console.log("Tareas completadas:");
+                    console.table(tareasCompletadas);
+                } else {
+                    alert("No hay tareas completadas");
+                }
+                break;
+            case 2:
+                let tareasPendientes = listaDeTareas.filter(tarea => !tarea.estado);
+                if (tareasPendientes.length > 0) {
+                    console.log("Tareas pendientes:");
+                    console.table(tareasPendientes);
+                } else {
+                    alert("No hay tareas pendientes");
+                }
+                break;
+            default:
+                alert("La opción ingresada no es válida");
+        }
+    } else {
+        alert("No hay tareas en la lista de tareas")
+    }
+}
+
+function completarTareaPorId(id) {
+    var indice = listaDeTareas.findIndex(function (tarea) {
+        return tarea.id === id;
+    });
+
+    if (indice !== -1) {
+        var tareaEncontrada = listaDeTareas[indice];
+        tareaEncontrada.completar();
+    } else {
+        alert("No se encontró ninguna tarea con el ID: " + id);
+    }
+}
+
+let opc
 do {
-    let opc = parseInt(prompt("Bienvenido al Gestor de tareas\n1)Ingresa una tarea\n2)Consultar tareas ingresadas\n3)Modificar tareas\n4)Salir"));
+    opc = parseInt(prompt("Bienvenido al Gestor de tareas\n1)Ingresa una tarea\n2)cambiar estado de tarea\n3)filtrar tareas\n4)Salir"));
     switch (opc) {
         case 1:
+            agregarTarea()
             break;
         case 2:
-            alert("Las tareas ingresadas son las siguiente: ");
+            if (listaDeTareas.length > 0) {
+                console.table(listaDeTareas);
+                let id = parseInt(prompt("ingrese el ID de la tarea a cambiar"))
+                if (isNaN(id)) {
+                    alert("valor no admitido")
+                } else {
+                    completarTareaPorId(id)
+                }
+            } else {
+                alert("no hay tareas en la lista")
+            }
             break;
         case 3:
+            filtrarTareas();
             break;
         case 4:
             console.log("Programa terminado");
@@ -25,4 +92,4 @@ do {
         default:
             alert("La opcion ingresa no es valida");
     }
-} while (opc == 4)
+} while (opc != 4)
