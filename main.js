@@ -15,8 +15,13 @@ function nuevaTarea(descripcion) {
 }
 function agregarTarea() {
     let descripcion = prompt("Ingresa la descripcion de la tarea");
+    if (descripcion === null) {
+        alert("La descripcion no puede estar vacia")
+        return;
+    }
     let tarea = new nuevaTarea(descripcion);
     listaDeTareas.push(tarea);
+    alert("la tarea: " + tarea.descripcion + " ha sido ingresada")
 }
 
 function filtrarTareas() {
@@ -27,6 +32,7 @@ function filtrarTareas() {
             case 1:
                 let tareasCompletadas = listaDeTareas.filter(tarea => tarea.estado);
                 if (tareasCompletadas.length > 0) {
+                    alert("Tareas completadas en consola")
                     console.log("Tareas completadas:");
                     console.table(tareasCompletadas);
                 } else {
@@ -36,6 +42,7 @@ function filtrarTareas() {
             case 2:
                 let tareasPendientes = listaDeTareas.filter(tarea => !tarea.estado);
                 if (tareasPendientes.length > 0) {
+                    alert("Tareas pendientes en consola")
                     console.log("Tareas pendientes:");
                     console.table(tareasPendientes);
                 } else {
@@ -51,12 +58,12 @@ function filtrarTareas() {
 }
 
 function completarTareaPorId(id) {
-    var indice = listaDeTareas.findIndex(function (tarea) {
+    let indice = listaDeTareas.findIndex(function (tarea) {
         return tarea.id === id;
     });
 
     if (indice !== -1) {
-        var tareaEncontrada = listaDeTareas[indice];
+        let tareaEncontrada = listaDeTareas[indice];
         tareaEncontrada.completar();
     } else {
         alert("No se encontró ninguna tarea con el ID: " + id);
@@ -65,7 +72,7 @@ function completarTareaPorId(id) {
 
 let opc
 do {
-    opc = parseInt(prompt("Bienvenido al Gestor de tareas\n1)Ingresa una tarea\n2)cambiar estado de tarea\n3)filtrar tareas\n4)Salir"));
+    opc = parseInt(prompt("Bienvenido al Gestor de tareas \n\nLas listas de tarea aparecen en consola\n\n\n1)Ingresa una tarea\n2)cambiar estado de tarea\n3)filtrar tareas\n4)Salir"));
     switch (opc) {
         case 1:
             agregarTarea()
@@ -87,6 +94,7 @@ do {
             filtrarTareas();
             break;
         case 4:
+            alert("Gracias por usar el gestor de tareas")
             console.log("Programa terminado");
             break;
         default:
