@@ -217,7 +217,7 @@ function obtenerTipoClima(codigoClima) {
 }
 
 function obtenerClima(lat, lon) {
-    let apiKey = 'sSZ8dWBnLARaj5c1' // Reemplaza 'tu_api_key' con tu propia clave API
+    let apiKey = 'sSZ8dWBnLARaj5c1'
     let apiUrl = `https://my.meteoblue.com/packages/current?apikey=${apiKey}&lat=${lat}&lon=${lon}&asl=25&format=json`
 
     fetch(apiUrl)
