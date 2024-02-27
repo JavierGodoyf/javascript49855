@@ -17,10 +17,6 @@ También integra la API meteorológica de Meteoblue para mostrar el pronóstico 
 - DOM Manipulation
 - Meteoblue API
 
-## Contribución
-
-Si deseas contribuir, abre un pull request. ¡Agradecemos sugerencias y mejoras!
-
 ## Autor
 
 Desarrollado por [Javier Godoy](https://github.com/JavierGodoyf)
