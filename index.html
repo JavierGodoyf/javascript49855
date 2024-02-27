@@ -4,11 +4,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Gestor de tareas</title>
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 
-<body>
+<body class="bg-secondary-subtle">
+
+
+    <div class="container mt-4 bg-white rounded-4 p-3">
+        <div id="error"></div>
+        <div class="row">
+            <div class="col-6" id="fecha-hora"></div>
+            <div class="col-6 text-end" id="clima"></div>
+        </div>
+        <h1 class="text-center">Gestor de tareas</h1>
+        <div class="input-group mt-3 mb-3">
+            <input type="text" class="form-control " id="nuevaTareaInput" placeholder="Ingresa una nueva tarea">
+            <button class="btn btn-primary" type="button" id="nuevaTareaBtn">Añadir tarea</button>
+        </div>
+        <div class="text-center">
+
+            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                <label class="btn btn-outline-primary" for="btnradio1" data-filter="Todas">Todas</label>
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio2" data-filter="pendientes">Pendientes</label>
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio3" data-filter="completadas">Completadas</label>
+            </div>
+        </div>
+        <ul class="list-group" id="listaTareasDOM">
+        </ul>
+    </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="main.js"></script>
+
 </body>
 
 </html>
