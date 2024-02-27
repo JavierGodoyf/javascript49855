@@ -1,39 +1,38 @@
-const listaDeTareas = [] //Array para almacenar tareas
+const listaDeTareas = []; // Array para almacenar tareas
 
 function guardarTareasEnAlmacenamiento() {
-    localStorage.setItem('tareas', JSON.stringify(listaDeTareas))
+    localStorage.setItem('tareas', JSON.stringify(listaDeTareas));
 }
 
 function cargarTareasDesdeAlmacenamiento() {
-    let tareas = JSON.parse(localStorage.getItem('tareas')) || []
+    let tareas = JSON.parse(localStorage.getItem('tareas')) || [];
     tareas.forEach(tarea => {
-        let nuevaTareaItem = document.createElement('li')
-        nuevaTareaItem.className = 'list-group-item d-flex justify-content-between align-items-center'
+        let nuevaTareaItem = document.createElement('li');
+        nuevaTareaItem.className = 'list-group-item d-flex justify-content-between align-items-center';
         nuevaTareaItem.innerHTML = `
             <span>${tarea.descripcion}</span>
             <div>
                 <button class="btn btn-success btn-sm boton-completar-tarea" ${tarea.estado ? 'disabled' : ''}>Completar</button>
-                <button class="btn btn-danger btn-sm boton-eliminar-tarea">X</button>
+                <button class="btn btn-danger btn-sm boton-eliminar-tarea" data-tarea-id="${tarea.id}">X</button>
             </div>
-        `
+        `;
         if (tarea.estado) {
-            nuevaTareaItem.querySelector('span').classList.add('text-success')
-            nuevaTareaItem.querySelector('span').classList.add('fw-bold')
+            nuevaTareaItem.querySelector('span').classList.add('text-success');
+            nuevaTareaItem.querySelector('span').classList.add('fw-bold');
         }
-        document.getElementById('listaTareasDOM').appendChild(nuevaTareaItem)
-        listaDeTareas.push(tarea)
-    })
+        document.getElementById('listaTareasDOM').appendChild(nuevaTareaItem);
+        listaDeTareas.push(tarea);
+    });
 }
 
-function crearNuevaTarea(descripcion) { //funcion constructora
-    crearNuevaTarea.contador = (crearNuevaTarea.contador || 0) + 1
-    this.id = crearNuevaTarea.contador
-    this.descripcion = descripcion
-    this.estado = false
+function crearNuevaTarea(descripcion) {
+    this.id = Date.now(); // Cambiado a utilizar un timestamp como ID único
+    this.descripcion = descripcion;
+    this.estado = false;
 }
 
-function agregarTarea() { //funcion para agregar tareas nuevas
-    let descripcion = document.getElementById('nuevaTareaInput').value.trim()
+function agregarTarea() {
+    let descripcion = document.getElementById('nuevaTareaInput').value.trim();
     if (descripcion === '') {
         Toastify({
             text: "El cuadro de texto no puede estar vacío",
@@ -41,56 +40,56 @@ function agregarTarea() { //funcion para agregar tareas nuevas
             style: {
                 background: "linear-gradient(to right, #df1b1b, #ba3030)",
             }
-        }).showToast()
-        return
+        }).showToast();
+        return;
     }
-    let tarea = new crearNuevaTarea(descripcion)
-    listaDeTareas.push(tarea)
+    let tarea = new crearNuevaTarea(descripcion);
+    listaDeTareas.push(tarea);
 
     // Crear un nuevo elemento de lista en el DOM
-    let tareaList = document.getElementById('listaTareasDOM')
-    let nuevaTareaItem = document.createElement('li')
-    nuevaTareaItem.className = 'list-group-item d-flex justify-content-between align-items-center'
+    let tareaList = document.getElementById('listaTareasDOM');
+    let nuevaTareaItem = document.createElement('li');
+    nuevaTareaItem.className = 'list-group-item d-flex justify-content-between align-items-center';
     nuevaTareaItem.innerHTML = `
         <span>${tarea.descripcion}</span>
         <div>
             <button class="btn btn-success btn-sm boton-completar-tarea">Completar</button>
-            <button class="btn btn-danger btn-sm boton-eliminar-tarea">X</button>
+            <button class="btn btn-danger btn-sm boton-eliminar-tarea" data-tarea-id="${tarea.id}">X</button>
         </div>
-    `
-    tareaList.appendChild(nuevaTareaItem)
+    `;
+    tareaList.appendChild(nuevaTareaItem);
 
     // Limpiar el campo de entrada después de agregar la tarea
-    document.getElementById('nuevaTareaInput').value = ''
+    document.getElementById('nuevaTareaInput').value = '';
 
     // Guardar las tareas en localStorage
-    guardarTareasEnAlmacenamiento()
+    guardarTareasEnAlmacenamiento();
     Toastify({
         text: "La tarea fue añadida exitosamente",
         duration: 3000,
         style: {
             background: "linear-gradient(to right, #008f39, #008f39)",
         }
-    }).showToast()
+    }).showToast();
 }
 
 function eliminarTarea(evento) {
-    let listItem = evento.target.closest('.list-group-item')
-    if (listItem) {
-        let index = Array.from(listItem.parentNode.children).indexOf(listItem)
-        listaDeTareas.splice(index, 1)
-        listItem.remove()
-        Toastify({
-            text: "La tarea seleccionada fue eliminada",
-            duration: 3000,
-            style: {
-                background: "linear-gradient(to right, #df1b1b, #ba3030)",
-            }
-        }).showToast()
+    let tareaId = evento.target.getAttribute('data-tarea-id'); // Obtener el ID de la tarea a eliminar
+    if (tareaId) {
+        let index = listaDeTareas.findIndex(tarea => tarea.id.toString() === tareaId); // Encontrar el índice de la tarea
+        if (index !== -1) {
+            listaDeTareas.splice(index, 1);
+            evento.target.closest('.list-group-item').remove();
+            Toastify({
+                text: "La tarea seleccionada fue eliminada",
+                duration: 3000,
+                style: {
+                    background: "linear-gradient(to right, #df1b1b, #ba3030)",
+                }
+            }).showToast();
+            guardarTareasEnAlmacenamiento(); // Actualizar el almacenamiento local
+        }
     }
-
-    // Guardar las tareas en localStorage después de eliminar una tarea
-    guardarTareasEnAlmacenamiento()
 }
 
 // Función para completar una tarea
@@ -116,15 +115,13 @@ function completarTarea(evento) {
 }
 
 function filtrarTareas(estado) {
-    return listaDeTareas.filter(tarea => {
-        if (estado === 'pendientes') {
-            return !tarea.estado //devuelve las que estan con estado false
-        } else if (estado === 'completadas') {
-            return tarea.estado //devuelve las que estan con estado true
-        } else {
-            return true //con el true devolvera indepndiente del estado
-        }
-    })
+    if (estado === 'pendientes') {
+        return listaDeTareas.filter(tarea => !tarea.estado); // Devuelve las tareas con estado false
+    } else if (estado === 'completadas') {
+        return listaDeTareas.filter(tarea => tarea.estado); // Devuelve las tareas con estado true
+    } else {
+        return listaDeTareas; // Devuelve todas las tareas
+    }
 }
 
 function mostrarTareasFiltradas(estado) {
@@ -138,7 +135,7 @@ function mostrarTareasFiltradas(estado) {
             <span>${tarea.descripcion}</span>
             <div>
                 <button class="btn btn-success btn-sm boton-completar-tarea" ${tarea.estado ? 'disabled' : ''}>Completar</button>
-                <button class="btn btn-danger btn-sm boton-eliminar-tarea">X</button>
+                <button class="btn btn-danger btn-sm boton-eliminar-tarea" data-tarea-id="${tarea.id}">X</button>
             </div>
         `
         if (tarea.estado) { //cambio de color si la tarea esta completada
