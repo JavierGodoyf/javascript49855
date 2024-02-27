@@ -9,7 +9,8 @@ También integra la API meteorológica de Meteoblue para mostrar el pronóstico 
 - Agregar y completar tareas.
 - Filtrar entre pendientes y completadas.
 - Mostrar la fecha y hora actual según la ubicación.
-
+- Mostrar temperatura y estado del tiempo segun la ubicacion
+  
 ## Tecnologías
 
 - JavaScript
